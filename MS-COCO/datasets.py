@@ -23,7 +23,8 @@ class CocoObjectGender(data.Dataset):
         self.args = args
 
         print("loading %s annotations.........." % self.split)
-        self.ann_data = pickle.load(open(os.path.join(annotation_dir, split+".data")))
+        # print(os.path.join(annotation_dir, split+".data"))
+        self.ann_data = pickle.load(open(os.path.join(annotation_dir, split+".data"),'rb'))
 
         if args.balanced and split == 'train':
             balanced_subset = pickle.load(open("./data/{}_ratio_{}.ids".format(split, \
@@ -218,4 +219,3 @@ class CocoObjectGender(data.Dataset):
                 img.size[1]), Image.ANTIALIAS)
 
         return Image.composite(black_img, img, img_mask)
-
