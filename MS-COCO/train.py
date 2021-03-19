@@ -55,7 +55,7 @@ parser.add_argument('--edges', action='store_true')
 
 parser.add_argument('--no_image', action='store_true', help='do not load image in dataloaders')
 
-parser.add_argument('--train',action='store_true', default=True)
+parser.add_argument('--train',action='store_true')
 parser.add_argument('--resume',action='store_true')
 parser.add_argument('--learning_rate', type=float, default=0.0001)
 parser.add_argument('--finetune', action='store_true')
