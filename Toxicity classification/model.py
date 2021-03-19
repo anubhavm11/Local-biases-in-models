@@ -11,9 +11,9 @@ from transformers import BertModel, BertTokenizer
 
 
 class ToxicityClassifier(nn.Module):
-  def __init__(self, n_classes):
+  def __init__(self, n_classes,pretrained_model_name = 'bert-base-cased'):
     super(ToxicityClassifier, self).__init__()
-    self.bert = BertModel.from_pretrained(PRE_TRAINED_MODEL_NAME)
+    self.bert = BertModel.from_pretrained(pretrained_model_name)
     self.drop = nn.Dropout(p=0.3)
     self.linear = nn.Linear(self.bert.config.hidden_size, n_classes)
     self.out = nn.Softmax(dim=-1)

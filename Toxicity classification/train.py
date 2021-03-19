@@ -102,7 +102,7 @@ print(y)
 X_test = test['comment_text'].to_numpy()
 print(X_test)
 
-X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=seed)
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=args.seed)
 print(len(X_train),len(y_train))
 
 
@@ -183,13 +183,15 @@ optimizer_grouped_parameters = [
                                 {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
                                 ]
 optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon)
-total_steps = len(train_data_loader) * EPOCHS
+total_steps = len(train_data_loader) * args.num_epochs
 scheduler = get_linear_schedule_with_warmup(optimizer,num_warmup_steps=0,num_training_steps=total_steps)
 loss_fn = nn.CrossEntropyLoss().to(device)
 
 """Training the model"""
 
 if args.train:
+  print("Now training the model")
+  print()
   best_accuracy = 0
   history = {'train_acc':[], 'train_loss':[], 'val_acc':[], 'val_loss':[]}
 
@@ -217,11 +219,14 @@ if args.train:
 
 """Getting predictions for test set"""
 
+print("Now Evaluating the model on the test set")
+
+
 def get_predictions(model, data_loader):
   model = model.eval()
   predictions = []
   with torch.no_grad():
-    for d in data_loader:
+    for d in tqdm(data_loader):
       input_ids = d["input_ids"].to(device)
       attention_mask = d["attention_mask"].to(device)
       outputs = model(input_ids=input_ids,attention_mask=attention_mask)
@@ -252,7 +257,7 @@ def get_embeddings(model, data_loader):
   predictions = []
   
   with torch.no_grad():
-    for d in data_loader:
+    for d in tqdm(data_loader):
       input_ids = d["input_ids"].to(device)
       attention_mask = d["attention_mask"].to(device)
       outputs = model(input_ids=input_ids,attention_mask=attention_mask)
