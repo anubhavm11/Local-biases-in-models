@@ -52,10 +52,10 @@ torch.cuda.manual_seed_all(args.seed)
 
 """Download the train and test datasets, either from kaggle or from the following links, and place them in args.data_dir folder"""
 
-# train.csv :   "https://drive.google.com/file/d/1--TceffCWOdmOv_oq-ryHn9NDifAwsTo/view?usp=sharing"
-# test_public_expanded.csv:  "https://drive.google.com/file/d/1-8yHngJrWfS_cirwbXY7kUYqxkWpRrxB/view?usp=sharing"
+# train.csv :                 "https://drive.google.com/file/d/1--TceffCWOdmOv_oq-ryHn9NDifAwsTo/view?usp=sharing"
+# test_public_expanded.csv:   "https://drive.google.com/file/d/1-8yHngJrWfS_cirwbXY7kUYqxkWpRrxB/view?usp=sharing"
 
-# Kaggle link: "https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/data"
+# Kaggle link:                "https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/data"
 
 
 """ Downsampling the data """
@@ -246,7 +246,7 @@ if not os.path.exists(args.results_dir):
 
 test['predictions'] = y_predicted.round().astype(int)
 
-test.to_csv(ps.path.join(args.results_dir,'test_predictions.csv'))
+test.to_csv(os.path.join(args.results_dir,'test_predictions.csv'))
 
 '''Saving embeddings for clustering'''
 
