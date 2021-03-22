@@ -1,5 +1,6 @@
 import sys, os, re, csv, codecs, numpy as np, pandas as pd
 import matplotlib.pyplot as plt
+import argparse, random
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -40,8 +41,6 @@ args = parser.parse_args()
 
 random.seed(args.seed)
 np.random.seed(args.seed)
-torch.manual_seed(args.seed)
-torch.cuda.manual_seed_all(args.seed)
 
 
 """Download the train and test datasets, either from kaggle or from the following links, and place them in args.data_dir folder"""
@@ -103,6 +102,8 @@ list_sentences_test = test["comment_text"]
 """Train tokenizer and make embedding matrix from word vectors"""
 
 max_features = 20000
+
+print("Now fitting tokenizer on the words.")
 tokenizer = Tokenizer(num_words=max_features)
 tokenizer.fit_on_texts(list(list_sentences_train))
 list_tokenized_train = tokenizer.texts_to_sequences(list_sentences_train)
@@ -117,7 +118,7 @@ X_te = pad_sequences(list_tokenized_test, maxlen=args.max_length)
 
 def loadEmbeddingMatrix(typeToLoad):
         print("Now loading the embeddings matrix for the "+typeToLoad+" word vectors.")
-        
+
         if(typeToLoad=="glove"):
             EMBEDDING_FILE= os.path.join(args.data_dir, "vectors.txt")
         elif(typeToLoad=="gn-glove"):
