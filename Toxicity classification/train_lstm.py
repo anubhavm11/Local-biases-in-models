@@ -207,7 +207,7 @@ x = Dense(1, activation="sigmoid")(x)
 model = Model(inputs=inp, outputs=x)
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-Print("Defined model summary:")
+print("Defined model summary:")
 model.summary()
 
 
@@ -228,7 +228,7 @@ if(args.train):
 
 
 """Getting and saving predictions and embeddings"""
-model.load_weights(os.path.join(args.data_dir, "best_model.hdf5"))
+model.load_weights(os.path.join(args.save_dir, "best_model.hdf5"))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print("Loaded model weights from file")
 
@@ -241,7 +241,7 @@ if not os.path.exists(args.results_dir):
 
 test.to_csv(os.path.join(args.results_dir,'test_predictions.csv'))
 
-embedding_layer_model = Model(inputs=model.input, outputs=model.get_layer('dropout_2').output)
+embedding_layer_model = Model(inputs=model.input, outputs=model.get_layer('dropout_1').output)
 
 sen_embeddings = embedding_layer_model.predict(X_te, verbose = 1)
 
