@@ -66,7 +66,7 @@ print(np.concatenate((ta_df.index.values, tb_df.index.values)))
 # get all the prediction results regarding to these 2 groups
 tgt = pd.concat([ta_df, tb_df], axis = 0)
 
-print(f"for "+args.demographic+" group, the overall accuracy is {metrics.accuracy_score(y_true = tgt['target'], y_pred = tgt[prediction_column])}")
+print(f"for "+args.demographic+f" group, the overall accuracy is {metrics.accuracy_score(y_true = tgt['target'], y_pred = tgt[prediction_column])}")
 
 
 
@@ -153,8 +153,8 @@ for i in range(iNCluster):
     res4plot.append([accac, accbc, abs(accac - accbc)])
     print(f"c {i}, {len(tac)} {ta}, {len(tbc)} {tb}, acc:{accac:.5f}, {accbc: .5f}, acc_d:{accac - accbc:.4f}")
 
-inertia_kmeans = get_inertia(kmeans_clusters, tgs)
-inertia_ikmeans = get_inertia(ikmeans_clusters, tgs)
+inertia_kmeans = utils.get_inertia(kmeans_clusters, tgs)
+inertia_ikmeans = utils.get_inertia(ikmeans_clusters, tgs)
 print(f"inertia: kmeans{inertia_kmeans}, ikmeans:{inertia_ikmeans}, ratio:{inertia_ikmeans / inertia_kmeans}")
 
 plt.close('all')

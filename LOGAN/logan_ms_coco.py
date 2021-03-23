@@ -144,6 +144,9 @@ print(f"Number of samples with local group bias greater than 5% = {num_bias}")
 if args.save_clusters and (not os.path.exists(args.results_dir)):
   os.makedirs(args.results_dir)
 
+
+atts = np.concatenate((np.zeros(len(ta_df)), np.ones(len(tb_df))))
+
 cluster_dict = {}
 num_bias = 0
 for j in range(num_objects):
